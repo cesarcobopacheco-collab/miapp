@@ -1,6 +1,16 @@
 {% extends "registros/base.html" %}
 
 {% block contenido %}
+<nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+        <span class="navbar-brand">Mi App</span>
+        <span class="text-white me-3">{{ request.user.username }}</span>
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-light btn-sm">Cerrar sesión</button>
+        </form>
+    </div>
+</nav>
 <h2 class="mb-4">Lista de Registros</h2>
 
 <a href="{% url 'agregar' %}" class="btn btn-primary mb-3">+ Agregar Registro</a>
@@ -21,10 +31,8 @@
             <td>{{ registro.descripcion }}</td>
             <td>{{ registro.fecha }}</td>
             <td>
-            
-    <a href="{% url 'editar' registro.id %}" class="btn btn-warning btn-sm">Editar</a>
-    <a href="{% url 'eliminar' registro.id %}" class="btn btn-danger btn-sm">Eliminar</a>
-</td>
+                <a href="{% url 'editar' registro.id %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'eliminar' registro.id %}" class="btn btn-danger btn-sm">Eliminar</a>
             </td>
         </tr>
         {% endfor %}
