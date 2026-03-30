@@ -31,3 +31,17 @@ def editar(request, id):
         registro.save()
         return redirect('lista')
     return render(request, 'registros/editar.html', {'registro': registro})
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+
+def registro_usuario(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('lista')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/registro.html', {'form': form})
