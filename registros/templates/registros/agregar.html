@@ -5,13 +5,74 @@
 
 <form method="post">
     {% csrf_token %}
-    <div class="mb-3">
-        <label class="form-label">Nombre</label>
-        <input type="text" name="nombre" class="form-control" required>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Descripción</label>
-        <textarea name="descripcion" class="form-control" rows="3" required></textarea>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Número</label>
+            <input type="number" name="numero" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Código</label>
+            <input type="text" name="codigo" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Chip</label>
+            <input type="text" name="chip" class="form-control">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Sexo</label>
+            <select name="sexo" class="form-select">
+                <option value="M">Macho</option>
+                <option value="H">Hembra</option>
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Raza</label>
+            <select name="raza" class="form-select">
+                <option value="">-- Seleccionar --</option>
+                <option value="ANG">ANG - Angus</option>
+                <option value="BRA">BRA - Brahman</option>
+                <option value="BR">BR - Brangus</option>
+                <option value="NEL">NEL - Nelore</option>
+                <option value="CHA">CHA - Charolais</option>
+                <option value="SIM">SIM - Simmental</option>
+                <option value="GIR">GIR - Gir</option>
+                <option value="HER">HER - Hereford</option>
+                <option value="BRO">BRO - Brown Swiss</option>
+                <option value="HOL">HOL - Holstein</option>
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Color</label>
+            <input type="text" name="color" class="form-control">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Lote</label>
+            <select name="lote" class="form-select">
+                <option value="">-- Seleccionar --</option>
+                <option value="LOTE - GANADO BRAHMAN">LOTE - GANADO BRAHMAN</option>
+                <option value="LOTE - GANADO BRANGUS">LOTE - GANADO BRANGUS</option>
+                <option value="LOTE - BRANGUS FUNDADORA">LOTE - BRANGUS FUNDADORA</option>
+                <option value="LOTE - GANADO COMERCIAL">LOTE - GANADO COMERCIAL</option>
+                <option value="LOTE - GANADO NELORE">LOTE - GANADO NELORE</option>
+                <option value="LOTE - SIN GRUPO">LOTE - SIN GRUPO</option>
+                <option value="LOTE - HACIENDA FATIMA">LOTE - HACIENDA FATIMA</option>
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Sector</label>
+            <select name="sector" class="form-select">
+                <option value="">-- Seleccionar --</option>
+                <option value="EQL LA PAZ">EQL LA PAZ</option>
+                <option value="EQL FATIMA">EQL FATIMA</option>
+                <option value="EQUINOS">EQUINOS</option>
+                <option value="JEQ LA PAZ">JEQ LA PAZ</option>
+                <option value="JEQ FATIMA">JEQ FATIMA</option>
+            </select>
+        </div>
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Detalle</label>
+            <textarea name="detalle" class="form-control" rows="2"></textarea>
+        </div>
     </div>
     <button type="submit" class="btn btn-success">Guardar</button>
     <a href="{% url 'lista' %}" class="btn btn-secondary">Cancelar</a>

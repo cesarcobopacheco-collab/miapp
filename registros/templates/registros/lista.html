@@ -3,7 +3,7 @@
 {% block contenido %}
 <nav class="navbar navbar-dark bg-dark mb-4">
     <div class="container-fluid">
-        <span class="navbar-brand">Mi App</span>
+        <span class="navbar-brand">Ganado EQL</span>
         <span class="text-white me-3">{{ request.user.username }}</span>
         <form method="post" action="{% url 'logout' %}" style="display:inline;">
             {% csrf_token %}
@@ -11,25 +11,39 @@
         </form>
     </div>
 </nav>
-<h2 class="mb-4">Lista de Registros</h2>
+
+<h2 class="mb-3">Lista de Registros</h2>
 
 <a href="{% url 'agregar' %}" class="btn btn-primary mb-3">+ Agregar Registro</a>
+<a href="{% url 'importar' %}" class="btn btn-success mb-3">Importar Excel</a>
 
-<table id="tabla" class="table table-striped">
-    <thead>
+<table id="tabla" class="table table-striped table-hover">
+    <thead class="table-dark">
         <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Fecha</th>
+            <th>No.</th>
+            <th>Código</th>
+            <th>Chip</th>
+            <th>Sexo</th>
+            <th>Raza</th>
+            <th>Color</th>
+            <th>Lote</th>
+            <th>Sector</th>
+            <th>Detalle</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         {% for registro in registros %}
         <tr>
-            <td>{{ registro.nombre }}</td>
-            <td>{{ registro.descripcion }}</td>
-            <td>{{ registro.fecha }}</td>
+            <td>{{ registro.numero }}</td>
+            <td>{{ registro.codigo }}</td>
+            <td>{{ registro.chip }}</td>
+            <td>{{ registro.sexo }}</td>
+            <td>{{ registro.raza }}</td>
+            <td>{{ registro.color }}</td>
+            <td>{{ registro.lote }}</td>
+            <td>{{ registro.sector }}</td>
+            <td>{{ registro.detalle }}</td>
             <td>
                 <a href="{% url 'editar' registro.id %}" class="btn btn-warning btn-sm">Editar</a>
                 <a href="{% url 'eliminar' registro.id %}" class="btn btn-danger btn-sm">Eliminar</a>
