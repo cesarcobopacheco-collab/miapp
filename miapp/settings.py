@@ -128,6 +128,10 @@ import dj_database_url
 import os
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [BASE_DIR / 'registros' / 'static']
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

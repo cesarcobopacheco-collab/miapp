@@ -1,8 +1,18 @@
 {% extends "registros/base.html" %}
+{% load static %}
 
 {% block contenido %}
 <div class="row justify-content-center">
     <div class="col-md-4">
+
+        <!-- LOGO -->
+        <div class="text-center mb-3">
+           
+            <img src="{% static 'registros/img/LOGO.png' %}" alt="Logo">
+                 alt="Logo" 
+                 style="max-width: 180px; height: auto;">
+        </div>
+
         <h2 class="mb-4 text-center">Iniciar Sesión</h2>
         <form method="post">
             {% csrf_token %}
