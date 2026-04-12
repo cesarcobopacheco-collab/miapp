@@ -6,7 +6,7 @@
 <div class="card mb-4">
     <div class="card-body">
         <h5 class="card-title">Paso 1 — Descarga la plantilla</h5>
-        <p class="card-text">Descarga la plantilla Excel, llena los datos y luego súbela.</p>
+        <p class="card-text">La plantilla contiene solo los campos necesarios.</p>
         <a href="{% url 'descargar_plantilla' %}" class="btn btn-success">
             Descargar plantilla Excel
         </a>
@@ -15,11 +15,35 @@
 
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Paso 2 — Sube el archivo con tus datos</h5>
+        <h5 class="card-title">Paso 2 — Selecciona Lote, Sector y sube el archivo</h5>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
-                <label class="form-label">Selecciona el archivo Excel</label>
+                <label class="form-label">Lote</label>
+                <select name="lote" class="form-select" required>
+                    <option value="">-- Seleccionar --</option>
+                    <option value="LOTE - GANADO BRAHMAN">LOTE - GANADO BRAHMAN</option>
+                    <option value="LOTE - GANADO BRANGUS">LOTE - GANADO BRANGUS</option>
+                    <option value="LOTE - BRANGUS FUNDADORA">LOTE - BRANGUS FUNDADORA</option>
+                    <option value="LOTE - GANADO COMERCIAL">LOTE - GANADO COMERCIAL</option>
+                    <option value="LOTE - GANADO NELORE">LOTE - GANADO NELORE</option>
+                    <option value="LOTE - SIN GRUPO">LOTE - SIN GRUPO</option>
+                    <option value="LOTE - HACIENDA FATIMA">LOTE - HACIENDA FATIMA</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Sector</label>
+                <select name="sector" class="form-select" required>
+                    <option value="">-- Seleccionar --</option>
+                    <option value="EQL LA PAZ">EQL LA PAZ</option>
+                    <option value="EQL FATIMA">EQL FATIMA</option>
+                    <option value="EQUINOS">EQUINOS</option>
+                    <option value="JEQ LA PAZ">JEQ LA PAZ</option>
+                    <option value="JEQ FATIMA">JEQ FATIMA</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Archivo Excel</label>
                 <input type="file" name="archivo" class="form-control" accept=".xlsx" required>
             </div>
             <button type="submit" class="btn btn-primary">Importar registros</button>

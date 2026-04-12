@@ -9,4 +9,5 @@ urlpatterns = [
     path('registro/', views.registro_usuario, name='registro'),
     path('importar/', views.importar_excel, name='importar'),
     path('descargar-plantilla/', views.descargar_plantilla, name='descargar_plantilla'),
+    path('eliminar-masivo/', views.eliminar_masivo, name='eliminar_masivo'),
 ]

@@ -72,7 +72,7 @@ def descargar_plantilla(request):
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Plantilla"
-    ws.append(['numero', 'codigo', 'chip', 'sexo', 'raza', 'color', 'lote', 'sector', 'detalle'])
+    ws.append(['NO.', 'CODIGO', 'CHIP', 'SEXO', 'RAZA', 'COLOR'])
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=plantilla_ganado.xlsx'
     wb.save(response)
@@ -82,6 +82,8 @@ def descargar_plantilla(request):
 def importar_excel(request):
     if request.method == 'POST' and request.FILES.get('archivo'):
         archivo = request.FILES['archivo']
+        lote = request.POST.get('lote', '')
+        sector = request.POST.get('sector', '')
         wb = openpyxl.load_workbook(archivo)
         ws = wb.active
         for row in ws.iter_rows(min_row=2, values_only=True):
@@ -93,9 +95,16 @@ def importar_excel(request):
                     sexo=row[3] or '',
                     raza=row[4] or '',
                     color=row[5] or '',
-                    lote=row[6] or '',
-                    sector=row[7] or '',
-                    detalle=row[8] or '',
+                    lote=lote,
+                    sector=sector,
+                    detalle='',
                 )
         return redirect('lista')
     return render(request, 'registros/importar.html')
+
+@login_required
+def eliminar_masivo(request):
+    if request.method == 'POST':
+        ids = request.POST.getlist('ids')
+        Registro.objects.filter(id__in=ids).delete()
+    return redirect('lista')
