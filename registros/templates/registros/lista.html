@@ -5,6 +5,8 @@
     <div class="container-fluid">
         <span class="navbar-brand">Ganado EQL</span>
         <span class="text-white me-3">{{ request.user.username }}</span>
+        <a href="{% url 'lista' %}" class="btn btn-outline-light btn-sm me-2">Registros</a>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-sm me-2">Dashboard</a>
         <form method="post" action="{% url 'logout' %}" style="display:inline;">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-light btn-sm">Cerrar sesión</button>
@@ -12,7 +14,16 @@
     </div>
 </nav>
 
-<h2 class="mb-3">Lista de Registros</h2>
+<h2 class="mb-3">Lista de Registros <span class="badge bg-primary">{{ registros|length }} registros</span></h2>
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endfor %}
+{% endif %}
 
 <div class="mb-3">
     <a href="{% url 'agregar' %}" class="btn btn-primary">+ Agregar Registro</a>
@@ -27,7 +38,7 @@
         <thead class="table-dark">
             <tr>
                 <th><input type="checkbox" id="seleccionarTodos"></th>
-                <th>No.</th>
+                <th>#</th>
                 <th>Código</th>
                 <th>Chip</th>
                 <th>Sexo</th>
@@ -43,7 +54,7 @@
             {% for registro in registros %}
             <tr>
                 <td><input type="checkbox" name="ids" value="{{ registro.id }}"></td>
-                <td>{{ registro.numero }}</td>
+                <td>{{ forloop.counter }}</td>
                 <td>{{ registro.codigo }}</td>
                 <td>{{ registro.chip }}</td>
                 <td>{{ registro.sexo }}</td>

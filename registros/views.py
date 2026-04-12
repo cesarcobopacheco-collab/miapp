@@ -72,7 +72,7 @@ def descargar_plantilla(request):
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Plantilla"
-    ws.append(['NO.', 'CODIGO', 'CHIP', 'SEXO', 'RAZA', 'COLOR'])
+    ws.append(['CODIGO', 'CHIP', 'SEXO', 'RAZA', 'COLOR'])
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=plantilla_ganado.xlsx'
     wb.save(response)
@@ -86,19 +86,22 @@ def importar_excel(request):
         sector = request.POST.get('sector', '')
         wb = openpyxl.load_workbook(archivo)
         ws = wb.active
+        filas_importadas = 0
         for row in ws.iter_rows(min_row=2, values_only=True):
             if row[0] is not None:
                 Registro.objects.create(
-                    numero=row[0] or 0,
-                    codigo=row[1] or '',
-                    chip=row[2] or '',
-                    sexo=row[3] or '',
-                    raza=row[4] or '',
-                    color=row[5] or '',
+                    codigo=row[0] or '',
+                    chip=row[1] or '',
+                    sexo=row[2] or '',
+                    raza=row[3] or '',
+                    color=row[4] or '',
                     lote=lote,
                     sector=sector,
                     detalle='',
                 )
+                filas_importadas += 1
+        from django.contrib import messages
+        messages.success(request, f'Se importaron {filas_importadas} registros correctamente.')
         return redirect('lista')
     return render(request, 'registros/importar.html')
 

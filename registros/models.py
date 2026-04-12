@@ -1,7 +1,6 @@
 from django.db import models
 
 class Registro(models.Model):
-    numero = models.IntegerField(default=0)
     codigo = models.CharField(max_length=50, blank=True, default='')
     chip = models.CharField(max_length=50, blank=True, default='')
     sexo = models.CharField(max_length=10, blank=True, default='')
@@ -14,5 +13,3 @@ class Registro(models.Model):
 
     def __str__(self):
         return self.codigo
-
-# Create your models here.
