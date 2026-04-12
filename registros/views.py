@@ -108,3 +108,22 @@ def eliminar_masivo(request):
         ids = request.POST.getlist('ids')
         Registro.objects.filter(id__in=ids).delete()
     return redirect('lista')
+
+@login_required
+def dashboard(request):
+    from django.db.models import Count
+    
+    total = Registro.objects.count()
+    
+    por_raza = list(Registro.objects.values('raza').annotate(total=Count('id')).order_by('-total'))
+    por_lote = list(Registro.objects.values('lote').annotate(total=Count('id')).order_by('-total'))
+    por_sector = list(Registro.objects.values('sector').annotate(total=Count('id')).order_by('-total'))
+    por_sexo = list(Registro.objects.values('sexo').annotate(total=Count('id')).order_by('-total'))
+    
+    return render(request, 'registros/dashboard.html', {
+        'total': total,
+        'por_raza': por_raza,
+        'por_lote': por_lote,
+        'por_sector': por_sector,
+        'por_sexo': por_sexo,
+    })

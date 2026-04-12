@@ -10,4 +10,5 @@ urlpatterns = [
     path('importar/', views.importar_excel, name='importar'),
     path('descargar-plantilla/', views.descargar_plantilla, name='descargar_plantilla'),
     path('eliminar-masivo/', views.eliminar_masivo, name='eliminar_masivo'),
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]

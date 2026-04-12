@@ -1,0 +1,115 @@
+{% extends "registros/base.html" %}
+
+{% block contenido %}
+<nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+        <span class="navbar-brand">Ganado EQL</span>
+        <span class="text-white me-3">{{ request.user.username }}</span>
+        <a href="{% url 'lista' %}" class="btn btn-outline-light btn-sm me-2">Ver Registros</a>
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-light btn-sm">Cerrar sesión</button>
+        </form>
+    </div>
+</nav>
+
+<h2 class="mb-4">Dashboard - Resumen de Ganado</h2>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary text-center p-3">
+            <h3>{{ total }}</h3>
+            <p class="mb-0">Total de Animales</p>
+        </div>
+    </div>
+    {% for s in por_sexo %}
+    <div class="col-md-3">
+        <div class="card text-white {% if s.sexo == 'H' %}bg-success{% else %}bg-info{% endif %} text-center p-3">
+            <h3>{{ s.total }}</h3>
+            <p class="mb-0">{% if s.sexo == 'H' %}Hembras{% else %}Machos{% endif %}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h5 class="card-title">Cantidad por Raza</h5>
+            <canvas id="graficaRaza"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h5 class="card-title">Cantidad por Lote</h5>
+            <canvas id="graficaLote"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h5 class="card-title">Cantidad por Sector</h5>
+            <canvas id="graficaSector"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const razaLabels = [{% for r in por_raza %}"{{ r.raza }}"{% if not forloop.last %},{% endif %}{% endfor %}];
+    const razaData = [{% for r in por_raza %}{{ r.total }}{% if not forloop.last %},{% endif %}{% endfor %}];
+
+    const loteLabels = [{% for l in por_lote %}"{{ l.lote }}"{% if not forloop.last %},{% endif %}{% endfor %}];
+    const loteData = [{% for l in por_lote %}{{ l.total }}{% if not forloop.last %},{% endif %}{% endfor %}];
+
+    const sectorLabels = [{% for s in por_sector %}"{{ s.sector }}"{% if not forloop.last %},{% endif %}{% endfor %}];
+    const sectorData = [{% for s in por_sector %}{{ s.total }}{% if not forloop.last %},{% endif %}{% endfor %}];
+
+    new Chart(document.getElementById('graficaRaza'), {
+        type: 'bar',
+        data: {
+            labels: razaLabels,
+            datasets: [{
+                label: 'Animales',
+                data: razaData,
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+
+    new Chart(document.getElementById('graficaLote'), {
+        type: 'bar',
+        data: {
+            labels: loteLabels,
+            datasets: [{
+                label: 'Animales',
+                data: loteData,
+                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+
+    new Chart(document.getElementById('graficaSector'), {
+        type: 'bar',
+        data: {
+            labels: sectorLabels,
+            datasets: [{
+                label: 'Animales',
+                data: sectorData,
+                backgroundColor: 'rgba(255, 159, 64, 0.7)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+</script>
+{% endblock %}
